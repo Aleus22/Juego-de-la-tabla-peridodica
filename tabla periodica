@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos de la Tabla Periódica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1565c0;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .game-card {
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: white;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+        }
+
+        .btn {
+            background-color: #2196f3;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #1976d2;
+        }
+
+        .game-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .game-section p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Juegos Didácticos de la Tabla Periódica</h1>
+        <p>¡Explora y aprende sobre los 118 elementos de forma divertida!</p>
+    </header>
+
+    <div class="container">
+        <div class="game-card">
+            <h3>Juego 1: Ordena los Elementos</h3>
+            <p>Ordena los elementos en orden de número atómico.</p>
+            <a href="#ordenarElementos" class="btn">Jugar</a>
+        </div>
+
+        <div class="game-card">
+            <h3>Juego 2: Adivina el Elemento</h3>
+            <p>Adivina el símbolo del elemento según su número atómico.</p>
+            <a href="#adivinarElemento" class="btn">Jugar</a>
+        </div>
+
+        <div class="game-card">
+            <h3>Juego 3: Elementos por Grupo</h3>
+            <p>Agrupa los elementos según su familia química.</p>
+            <a href="#grupoElementos" class="btn">Jugar</a>
+        </div>
+
+        <div class="game-card">
+            <h3>Juego 4: Completa la Tabla</h3>
+            <p>Escribe el símbolo del elemento en posiciones aleatorias.</p>
+            <a href="#completarTabla" class="btn">Jugar</a>
+        </div>
+
+        <div class="game-card">
+            <h3>Juego 5: Trivia de los Elementos</h3>
+            <p>Responde preguntas sobre los elementos químicos.</p>
+            <a href="#triviaElementos" class="btn">Jugar</a>
+        </div>
+    </div>
+
+    <div id="ordenarElementos" class="game-section">
+        <h2>Juego 1: Ordena los Elementos</h2>
+        <p>Ordena estos elementos por número atómico: H, Li, Be, B</p>
+        <input type="text" id="respuestaOrdenar" placeholder="Escribe en orden (H, Li, Be, B)">
+        <button onclick="verificarOrden()" class="btn">Verificar</button>
+        <p id="resultadoOrden"></p>
+        <a href="#top" class="btn">Volver al Menú</a>
+    </div>
+
+    <div id="adivinarElemento" class="game-section">
+        <h2>Juego 2: Adivina el Elemento</h2>
+        <p>¿Cuál es el símbolo del elemento con número atómico 79?</p>
+        <input type="text" id="respuestaAdivinar" placeholder="Escribe el símbolo">
+        <button onclick="verificarAdivinar()" class="btn">Verificar</button>
+        <p id="resultadoAdivinar"></p>
+        <a href="#top" class="btn">Volver al Menú</a>
+    </div>
+
+    <div id="grupoElementos" class="game-section">
+        <h2>Juego 3: Elementos por Grupo</h2>
+        <p>¿A qué grupo pertenece el elemento Potasio (K)?</p>
+        <input type="text" id="respuestaGrupo" placeholder="Escribe el grupo">
+        <button onclick="verificarGrupo()" class="btn">Verificar</button>
+        <p id="resultadoGrupo"></p>
+        <a href="#top" class="btn">Volver al Menú</a>
+    </div>
+
+    <div id="completarTabla" class="game-section">
+        <h2>Juego 4: Completa la Tabla</h2>
+        <p>¿Cuál es el símbolo del elemento en la posición 20?</p>
+        <input type="text" id="respuestaCompletar" placeholder="Escribe el símbolo">
+        <button onclick="verificarCompletar()" class="btn">Verificar</button>
+        <p id="resultadoCompletar"></p>
+        <a href="#top" class="btn">Volver al Menú</a>
+    </div>
+
+    <div id="triviaElementos" class="game-section">
+        <h2>Juego 5: Trivia de los Elementos</h2>
+        <p>¿Cuál es el elemento radiactivo con número atómico 92?</p>
+        <input type="text" id="respuestaTrivia" placeholder="Escribe el nombre del elemento">
+        <button onclick="verificarTrivia()" class="btn">Verificar</button>
+        <p id="resultadoTrivia"></p>
+        <a href="#top" class="btn">Volver al Menú</a>
+    </div>
+
+    <script>
+        // Muestra la sección de juego seleccionada y oculta las demás
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                const juegoId = event.target.getAttribute('href').substring(1);
+                const juegos = document.querySelectorAll('.game-section');
+                juegos.forEach(juego => juego.style.display = 'none');
+                document.getElementById(juegoId).style.display = 'block';
+            });
+        });
+
+        // Funciones de verificación para cada juego
+        function verificarOrden() {
+            const respuesta = document.getElementById("respuestaOrdenar").value.trim().toLowerCase();
+            const resultado = document.getElementById("resultadoOrden");
+            resultado.textContent = respuesta === "h, li, be, b" ? "¡Correcto!" : "Incorrecto. Intenta de nuevo.";
+        }
+
+        function verificarAdivinar() {
+            const respuesta = document.getElementById("respuestaAdivinar").value.trim().toLowerCase();
+            const resultado = document.getElementById("resultadoAdivinar");
+            resultado.textContent = respuesta === "au" ? "¡Correcto! El elemento es Oro (Au)." : "Incorrecto. Intenta de nuevo.";
+        }
+
+        function verificarGrupo() {
+            const respuesta = document.getElementById("respuestaGrupo").value.trim().toLowerCase();
+            const resultado = document.getElementById("resultadoGrupo");
+            resultado.textContent = respuesta === "alcalinos" ? "¡Correcto! Potasio (K) es un metal alcalino." : "Incorrecto. Intenta de nuevo.";
+        }
+
+        function verificarCompletar() {
+            const respuesta = document.getElementById("respuestaCompletar").value.trim().toLowerCase();
+            const resultado = document.getElementById("resultadoCompletar");
+            resultado.textContent = respuesta === "ca" ? "¡Correcto! El elemento es Calcio (Ca)." : "Incorrecto. Intenta de nuevo.";
+        }
+
+        function verificarTrivia() {
+            const respuesta = document.getElementById("respuestaTrivia").value.trim().toLowerCase();
+            const resultado = document.getElementById("resultadoTrivia");
+            resultado.textContent = respuesta === "uranio" ? "¡Correcto! El elemento es Uranio (U)." : "Incorrecto. Intenta de nuevo.";
+        }
+    </script>
+
+    <script>
+        // Mostrar el primer juego al cargar la página
+        document.querySelector('.game-card a').click();
+    </script>
+</body>
+</html
+
